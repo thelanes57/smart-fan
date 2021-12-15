@@ -12,7 +12,7 @@ namespace SmartFan.Devices
 
         public override double Read()
         {
-            return random.Next(10, 35) + random.NextDouble();
+            return random.Next(-50, 51) + random.NextDouble();
         }
 
         public override void Write(ChangeParameter parameter)
