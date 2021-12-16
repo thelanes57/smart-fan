@@ -9,6 +9,7 @@ namespace SmartFan.Devices
         public double TarmValueF { get; set; }
         public int BarValue { get; set; }
         public int GigValue { get; set; }
-       
+        public double DutyCycle { get; set; }
+
     }
 }
