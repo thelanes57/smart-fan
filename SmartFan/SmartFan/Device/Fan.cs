@@ -23,7 +23,7 @@ namespace SmartFan.Devices
 
         public override void Write(ChangeValues parameter)
         {
-            Expander.PwmFreq(Freq);
+           
             Expander.AnalogWriteDouble(GpioExpanderPin.Pin0, parameter.DutyCycle);
         }
     }
