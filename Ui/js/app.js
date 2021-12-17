@@ -20,12 +20,11 @@ const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/fan")
             .build();
 
-        hubConnection.on("Recever", function (values){
-            let myObj = JSON.parse(values);
-            temperCe.innerHTML = myObj.TarmValueC;
-            temperFe.innerHTML = myObj.TarmValueF;
-            barValueHg.innerHTML = myObj.BarValue;
-            hygr.innerHTML = myObj.GidValue;
+        hubConnection.on("Recever", function (myObj){
+            temperCe.innerHTML = Math.round10(myObj.tarmValueC, -1);
+            temperFe.innerHTML = Math.round10(myObj.tarmValueF, -1);
+            barValueHg.innerHTML = myObj.barValue;
+            hygr.innerHTML = myObj.gigValue;
         });
 
         speedFan.addEventListener("input", function () {
