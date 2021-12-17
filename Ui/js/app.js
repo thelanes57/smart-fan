@@ -23,7 +23,8 @@ const hubConnection = new signalR.HubConnectionBuilder()
         hubConnection.on("Recever", function (myObj){
             temperCe.innerHTML = Math.round10(myObj.tarmValueC, -1);
             temperFe.innerHTML = Math.round10(myObj.tarmValueF, -1);
-            barValueHg.innerHTML = myObj.barValue;
+            barValueHg.innerHTML = myObj.barValueMGH;
+            barValuePa.innerHTML = myObj.barValuePascal;
             hygr.innerHTML = myObj.gigValue;
         });
 
