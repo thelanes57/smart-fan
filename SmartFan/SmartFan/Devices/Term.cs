@@ -15,9 +15,9 @@ namespace SmartFan.Devices
             return random.Next(-50, 51) + random.NextDouble();
         }
 
-        public override void Write()
+        public override void Write(ChangeParameter parameter)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }
