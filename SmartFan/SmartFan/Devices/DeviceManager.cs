@@ -12,6 +12,7 @@ namespace SmartFan.Device
     {
         public int correntSpeed = 10;
         private Term _term;
+<<<<<<< HEAD
         private Barom _barom;
         private Gigrom _gigrom;
         //private Fan _fan;
@@ -24,6 +25,16 @@ namespace SmartFan.Device
             _term = new Term("Some name term");
             _barom = new Barom("Some name Barom");
             _gigrom = new Gigrom("Some name Gigrom");
+=======
+        //private Fan _fan;
+
+        private readonly IHubContext<DataHubBase, IDataHub> _hub;
+
+        public DeviceManager(IHubContext<DataHubBase, IDataHub> hub)
+        {
+            _hub = hub;
+            _term = new Term("Some name term");
+>>>>>>> origin/Server
             //_fan = new Fan("Some name fan");
             Thread t = new Thread(GetData);
             t.Start();
@@ -33,6 +44,7 @@ namespace SmartFan.Device
         {
             while (true)
             {
+<<<<<<< HEAD
                 var valeTem = _term.Read();
                 var valeBar = _barom.Read();
                 var data = new ParameterValues()
@@ -44,6 +56,9 @@ namespace SmartFan.Device
                     GigValue = (int) _gigrom.Read()
                 };
                 await _hub.Clients.All.Recever(data);
+=======
+                await _hub.Clients.All.Recever(_term.Read().ToString());
+>>>>>>> origin/Server
                 await Task.Delay(5000);
             }
         }
