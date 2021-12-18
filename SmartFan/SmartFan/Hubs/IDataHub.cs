@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using SmartFan.Data;
+using System.Threading.Tasks;
 
 namespace SmartFan.Hubs
 {
     public interface IDataHub
     {
-        Task Recever(string message);
+        Task Recever(ParameterValues message);
     }
 }

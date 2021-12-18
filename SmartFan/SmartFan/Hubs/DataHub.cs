@@ -1,10 +1,11 @@
-﻿using SmartFan.Device;
+﻿using Microsoft.AspNetCore.SignalR;
+using SmartFan.Device;
 using System;
 using System.Threading.Tasks;
 
 namespace SmartFan.Hubs
 {
-    public class DataHub : DataHubBase
+    public class DataHub : Hub<IDataHub>
     {
         DeviceManager _dm;
         public DataHub(DeviceManager dm)
@@ -12,7 +13,7 @@ namespace SmartFan.Hubs
             _dm = dm;
         }
 
-        public override async Task ReciveData(string message)
+        public async Task ReciveData(string message)
         {
             _dm.SetData(Convert.ToDouble(message));
         }

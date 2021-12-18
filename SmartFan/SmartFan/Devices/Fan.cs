@@ -15,6 +15,7 @@ namespace SmartFan.Devices
         {
             Pi.Init<BootstrapWiringPi>();
             Expander = Pi.I2C.GetGpioExpander();
+            Expander.PwmFreq(Freq);
         }
 
         public override double Read()
@@ -24,9 +25,7 @@ namespace SmartFan.Devices
 
         public override void Write(ChangeParameter parameter)
         {
-            Expander.PwmFreq(Freq);
             Expander.AnalogWriteDouble(GpioExpanderPin.Pin0, parameter.DutyCycle);
-
         }
     }
 }

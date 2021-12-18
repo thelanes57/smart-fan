@@ -1,32 +1,108 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Test</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Климат контроль</title>
 </head>
 <body>
-    <div id="inputForm">
-        <input type="text" id="message" />
-        <input type="button" id="sendBtn" value="Отправить" />
+    <header>
+        <div class="lang">
+            <label class="switch">
+                <input type="checkbox" id = "lang">
+                <span class="slider"></span>
+            </label>      
+        </div>
+        <div class="mode">
+            <label class="switch">
+                <input type="checkbox" id = "mode">
+                <span class="slider"></span>
+            </label>            
+        </div>
+
+    </header>
+
+    <div class="content">
+        <div class="fan_speed">
+            <h1>Fan speed</h1>
+            <div class="fan_speed_content">
+                <div class="fan">
+                    <img src="/img/Vent.png" alt="Fan" class="vent">
+                </div>
+                <div class="range_content">
+                    <input class = "range" type="range" id = "speedFan" min="0" max="100" step="1" value="0">
+                </div>
+                <div class="diagram progress" data-percent="1">
+                    <div class="piece left"></div>
+                    <div class="piece right"></div>
+                    <div class="text">
+                        <div>
+                            <b id = "range_value">0</b>
+                            <b>%</b>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="temperature">
+            <h1>Temperature</h1>
+            <div class="temperature_content">
+                <div class="ce">
+                    <img src="/img/Temperature_C_Black.png" alt="temperature">
+                    <div class="text_te">
+                        <b id = "temperature_ce">0</b>
+                    </div>  
+                </div>
+                <div class="fe">
+                    <img src="/img/Temperatrure_F_Black.png" alt="temperature">
+                    <div class="text_te">
+                        <b id = "temperature_fe">0</b>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="right_cont">
+            <div class="bar">
+                <h1>Barometr</h1>
+                <div class="bar_content">
+                    <div class="hg">
+                        <b id = hg>0</b>
+                        <b>mm Hg</b>
+                    </div>
+                    <div class="pa">
+                        <b id = "pa">0</b>
+                        <b>Pa</b>
+                    </div>                
+                </div>
+    
+            </div>
+            <div class="hygr">
+                <h1>Hygrometr</h1>
+                <div class="hygr_content">
+                   <div class="info_hygr">
+                    <div class="diagram1 progress" data-percent="0">
+                        <div class="piece left1"></div>
+                        <div class="piece right1"></div>
+                        <div class="text1">
+                            <div>
+                                <b id = "range_value1">0</b>
+                                <b>%</b>
+                                </div>
+                            </div>
+                    </div>
+                   </div> 
+                </div>
+                
+            </div>
+        </div>
+
+        
     </div>
-    <div><p id="response"></p></div>
     <script src="js/signalr/dist/browser/signalr.min.js"></script>
-    <script>
-        const hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl("/fan")
-            .build();
-
-        hubConnection.on("Recever", function (values) {
-
-            document.getElementById("response").innerText = values;
-        });
-
-        document.getElementById("sendBtn").addEventListener("click", function (e) {
-            let message = document.getElementById("message").value;
-            hubConnection.invoke("ReciveData", message);
-        });
-
-        hubConnection.start();
-    </script>
+    <script src = "js/app.js"></script>
 </body>
 </html>

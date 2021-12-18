@@ -14,7 +14,7 @@ namespace SmartFan.Device
         private Term _term;
         private Barom _barom;
         private Gigrom _gigrom;
-        //private Fan _fan;
+        private Fan _fan;
 
         private readonly IHubContext<DataHub, IDataHub> _hub;
 
@@ -51,7 +51,7 @@ namespace SmartFan.Device
         public void SetData(double dutyCycle)
         {
             correntSpeed = Convert.ToInt32(dutyCycle);
-            //_fan.Write(new ChangeParameter() { DutyCycle = dutyCycle });
+            //_fan.Write(new ChangeParameter() { DutyCycle = dutyCycle/100 });
         }
     }
 }

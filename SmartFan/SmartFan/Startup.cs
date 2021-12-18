@@ -13,7 +13,6 @@ namespace SmartFan
         {
             services.AddSignalR();
             services.AddSingleton<DeviceManager>();
-            services.AddScoped<DataHubBase, DataHub>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -29,7 +28,7 @@ namespace SmartFan
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<DataHubBase>("/fan");
+                endpoints.MapHub<DataHub>("/fan");
             });
         }
     }
