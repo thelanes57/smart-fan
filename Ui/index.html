@@ -10,10 +10,12 @@
 <body>
     <div class="header">
        <div class="lang">
+           <b>EN</b>
             <label class="switch">
                 <input type="checkbox" id = "lang">
                 <span class="slider"></span>
-            </label>      
+            </label>    
+            <b>RU</b>  
         </div>
         <div class="mode">
             <img src="/img/Day.png" alt="" class="day">
@@ -29,7 +31,7 @@
 
     <div class="content">
         <div class="fan_speed">
-            <h1>Fan speed</h1>
+            <h1 id= "lang_fan" >Fan speed</h1>
             <div class="fan_speed_content">
                 <div class="fan">
                    <img  class = "black" src="/img/Vent_Black.png" alt="Vent">
@@ -53,7 +55,7 @@
 
         </div>
         <div class="temperature">
-            <h1>Temperature</h1>
+            <h1 id= "lang_temp">Temperature</h1>
             <div class="temperature_content">
                 <div class="ce">
                     <img class="black" src="/img/Temperature_C_Black.png" alt="temperature">
@@ -75,7 +77,7 @@
         </div>
         <div class="right_cont">
             <div class="bar">
-                <h1>Barometr</h1>
+                <h1 id= "lang_bar">Barometr</h1>
                 <div class="bar_content">
                     <div class="hg">
                         <b id = hg>0</b>
@@ -89,7 +91,7 @@
     
             </div>
             <div class="hygr">
-                <h1>Hygrometr</h1>
+                <h1 id= "lang_hygr">Hygrometr</h1>
                 <div class="hygr_content">
                    <div class="info_hygr">
                     <div class="diagram1 progress" data-percent="0">
