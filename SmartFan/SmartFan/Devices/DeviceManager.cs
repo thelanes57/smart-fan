@@ -10,7 +10,7 @@ namespace SmartFan.Device
 {
     public class DeviceManager
     {
-        public int correntSpeed = 10;
+        public int currentSpeed = 10;
         private Term _term;
         private Barom _barom;
         private Gigrom _gigrom;
@@ -25,12 +25,13 @@ namespace SmartFan.Device
             _barom = new Barom("Some name Barom");
             _gigrom = new Gigrom("Some name Gigrom");
             //_fan = new Fan("Some name fan");
-            Thread t = new Thread(GetData);
-            t.Start();
+            Thread thread = new Thread(GetData);
+            thread.Start();
         }
 
         public async void GetData()
         {
+
             while (true)
             {
                 var valeTem = _term.Read();
@@ -43,15 +44,16 @@ namespace SmartFan.Device
                     BarValuePascal = (int)valeBar * 101325/760,
                     GigValue = (int) _gigrom.Read()
                 };
-                await _hub.Clients.All.Recever(data);
+                await _hub.Clients.All.Receiver(data);
                 await Task.Delay(5000);
             }
         }
 
+
         public void SetData(double dutyCycle)
         {
-            correntSpeed = Convert.ToInt32(dutyCycle);
-            //_fan.Write(new ChangeParameter() { DutyCycle = dutyCycle/100 });
+            currentSpeed = Convert.ToInt32(dutyCycle);
+            //_fan.Write(new ChangeParameter() { DutyCycle = dutyCycle / 100 });
         }
     }
 }
