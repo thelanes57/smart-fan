@@ -1,5 +1,5 @@
 const language = document.getElementById("lang")
-const mode = document.getElementById("mode")
+const switchMode = document.getElementById("mode")
 const speedFan = document.getElementById("speedFan")
 const rangeSpeed = document.getElementById("range_value")
 const data = document.querySelector(".diagram.progress");
@@ -8,6 +8,17 @@ const temperFe = document.getElementById("temperature_fe");
 const barValueHg = document.getElementById("hg");
 const barValuePa = document.getElementById("pa");
 const hygr = document.getElementById("range_value1");
+
+switchMode.onclick = function(){
+    let theme = document.getElementById("theme")
+
+    if (theme.getAttribute("href") == "/css/day_mode.css"){
+        theme.href = "/css/night_mode.css" 
+    }
+    else {
+        theme.href = "/css/day_mode.css"
+    }
+};
 
 speedFan.addEventListener("input", function() {
     rangeSpeed.value = this.value;
@@ -21,11 +32,10 @@ const hubConnection = new signalR.HubConnectionBuilder()
             .build();
 
         hubConnection.on("Recever", function (myObj){
-            temperCe.innerHTML = Math.round10(myObj.tarmValueC, -1);
-            temperFe.innerHTML = Math.round10(myObj.tarmValueF, -1);
-            barValueHg.innerHTML = myObj.barValueMGH;
-            barValuePa.innerHTML = myObj.barValuePascal;
-            hygr.innerHTML = myObj.gigValue;
+            temperCe.innerHTML = Math.round10(myObj.TarmValueC, -1);
+            temperFe.innerHTML = Math.round10(myObj.TarmValueF, -1);
+            barValueHg.innerHTML = myObj.BarValue;
+            hygr.innerHTML = myObj.GidValue;
         });
 
         speedFan.addEventListener("input", function () {
@@ -41,19 +51,19 @@ const hubConnection = new signalR.HubConnectionBuilder()
  
 
     
-function progressView(){
-    let diagramBox = 'data-percent';
-    diagramBox.forEach((box) => {
-        let deg = (360 * box.dataset.percent / 100) + 180;
-        if(box.dataset.percent >= 50){
-            box.classList.add('over_50');
-        }else{
-            box.classList.remove('over_50');
-        }
-        box.querySelector('.piece.right').style.transform = 'rotate('+deg+'deg)';
-    });
-}
-progressView();
+// function progressView(){
+//     let diagramBox = 'data-percent';
+//     diagramBox.forEach((box) => {
+//         let deg = (360 * box.dataset.percent / 100) + 180;
+//         if(box.dataset.percent >= 50){
+//             box.classList.add('over_50');
+//         }else{
+//             box.classList.remove('over_50');
+//         }
+//         box.querySelector('.piece.right').style.transform = 'rotate('+deg+'deg)';
+//     });
+// }
+// progressView();
 
 // function timer(speed){
 //     let diagramBox = document.querySelector('.diagram.progress');

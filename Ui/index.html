@@ -4,32 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/day_mode.css" id="theme">
     <title>Климат контроль</title>
 </head>
 <body>
-    <header>
-        <div class="lang">
+    <div class="header">
+       <div class="lang">
             <label class="switch">
                 <input type="checkbox" id = "lang">
                 <span class="slider"></span>
             </label>      
         </div>
         <div class="mode">
+            <img src="/img/Day.png" alt="" class="day">
             <label class="switch">
                 <input type="checkbox" id = "mode">
                 <span class="slider"></span>
-            </label>            
-        </div>
+            </label>
+            <img src="/img/Night.png" alt="" class="night">            
+        </div> 
+    </div>
+        
 
-    </header>
 
     <div class="content">
         <div class="fan_speed">
             <h1>Fan speed</h1>
             <div class="fan_speed_content">
                 <div class="fan">
-                    <img src="/img/Vent.png" alt="Fan" class="vent">
+                   <img  class = "black" src="/img/Vent_Black.png" alt="Vent">
+                   <img  class = "white" src="/img/Vent_White.png" alt="Vent">
+
                 </div>
                 <div class="range_content">
                     <input class = "range" type="range" id = "speedFan" min="0" max="100" step="1" value="0">
@@ -51,13 +56,16 @@
             <h1>Temperature</h1>
             <div class="temperature_content">
                 <div class="ce">
-                    <img src="/img/Temperature_C_Black.png" alt="temperature">
+                    <img class="black" src="/img/Temperature_C_Black.png" alt="temperature">
+                    <img  class = "white" src="/img/Temperature_C_White.png" alt="temperature">
+
                     <div class="text_te">
                         <b id = "temperature_ce">0</b>
                     </div>  
                 </div>
                 <div class="fe">
-                    <img src="/img/Temperatrure_F_Black.png" alt="temperature">
+                    <img class = "black" src="/img/Temperatrure_F_Black.png" alt="temperature">
+                    <img  class = "white" src="/img/Temperature_F_White.png" alt="temperature">
                     <div class="text_te">
                         <b id = "temperature_fe">0</b>
                     </div>

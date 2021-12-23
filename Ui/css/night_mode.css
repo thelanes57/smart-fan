@@ -66,18 +66,38 @@ img {
 }
 /*--------------------*/
 body {
-  background: linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);
+  -webkit-transition: 1s;
+  transition: 1s;
+  background: linear-gradient(to right, #536976, #292e49);
   height: auto;
   width: auto;
   font-family: "Montserrat", sans-serif;
 }
-header {
+div {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.header {
+  max-height: 9vh;
+  display: flex;
   margin-left: 70%;
+  margin-right: 10%;
+  justify-content: space-between;
 }
 .lang,
 .mode {
   display: inline-block;
+  margin-top: 5%;
 }
+.day {
+  max-width: 50%;
+  height: 80%;
+}
+.night {
+  max-width: 45%;
+  height: 60%;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -122,22 +142,30 @@ input:checked + .slider:before {
   transform: translateX(35px);
 }
 .content {
-  background-color: rgba(255, 255, 255, 0.8);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 30px;
   height: 85vh;
-  margin: 4% 1%;
+  margin: 2% 1%;
 }
 h1 {
-  margin: -4vh 5%;
-  font-size: 1.5vw;
+  margin: -5vh 5%;
+  font-size: 2vw;
   font-weight: bold;
   letter-spacing: 2px;
+  color: #f5f5f5;
+}
+b {
+  color: #f5f5f5;
 }
 .fan_speed,
 .temperature {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
   border-radius: 30px;
   width: 25%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(41, 46, 73, 0.9);
   margin: 4% 4%;
   height: 80%;
   float: left;
@@ -146,18 +174,20 @@ h1 {
 .fan {
   text-align: center;
 }
-.fan {
-  margin-top: 15%;
-}
 .fan img {
   max-width: 50%;
+  margin-top: 17%;
 }
+.black {
+  display: none;
+}
+
 .range {
   margin-top: 10%;
   width: 75%;
   height: 3vh;
   -webkit-appearance: none;
-  background: #355c7d;
+  background: #e5e5e5;
   outline: none;
   border-radius: 20px;
   overflow: hidden;
@@ -167,9 +197,9 @@ h1 {
   width: 3vw;
   height: 25px;
   border-radius: 30%;
-  background: #efefef;
+  background: #355c7d;
   cursor: pointer;
-  box-shadow: -407px 0 0 400px #6c5b7b;
+  box-shadow: -407px 0 0 400px #536976;
 }
 .diagram {
   margin: 6% auto;
@@ -189,7 +219,7 @@ h1 {
   right: 20px;
   bottom: 20px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background-color: rgba(41, 46, 73, 0.9);
   z-index: 3;
   opacity: 1;
 }
@@ -225,13 +255,13 @@ h1 {
   transform: rotate(360deg);
 }
 .diagram .left::before {
-  background: #355c7d;
+  background: #f5f5f5;
 }
 .diagram.over_50 .left::before {
   background: #990;
 }
 .diagram .right::before {
-  background: #355c7d;
+  background: #f5f5f5;
 }
 .diagram .text {
   position: absolute;
@@ -281,7 +311,7 @@ h1 {
   display: inline-block;
   border-radius: 30px;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(41, 46, 73, 0.9);
   height: 46%;
 }
 .hygr {
@@ -298,7 +328,7 @@ h1 {
   margin-top: 25%;
 }
 .diagram1 {
-  margin: 15% auto;
+  margin: 18% auto;
   width: 25vh;
   height: 25vh;
   border-radius: 50%;
@@ -315,7 +345,7 @@ h1 {
   right: 20px;
   bottom: 20px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background-color: rgba(41, 46, 73, 0.9);
   z-index: 3;
   opacity: 1;
 }
@@ -351,13 +381,13 @@ h1 {
   transform: rotate(360deg);
 }
 .diagram1 .left1::before {
-  background: #6c5b7b;
+  background: #f5f5f5;
 }
 .diagram1.over_50 .left1::before {
   background: #990;
 }
 .diagram1 .right1::before {
-  background: #6c5b7b;
+  background: #f5f5f5;
 }
 .diagram1 .text1 {
   position: absolute;
