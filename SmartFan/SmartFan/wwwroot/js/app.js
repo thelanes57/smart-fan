@@ -19,18 +19,26 @@ speedFan.addEventListener("input", function() {
 const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/fan")
             .build();
-
-        hubConnection.on("Recever", function (myObj){
+        hubConnection.on("Receiver", function (myObj){
             temperCe.innerHTML = myObj.tarmValueC;
             temperFe.innerHTML = myObj.tarmValueF;
             barValueHg.innerHTML = myObj.barValueMGH;
             barValuePa.innerHTML = myObj.barValuePascal;
             hygr.innerHTML = myObj.gigValue;
+            
         });
+        hubConnection.on("StartSpeed", function (value) {
+            rangeSpeed.value = value;
+            rangeSpeed.innerHTML = rangeSpeed.value;
+            data.setAttribute('data-percent', rangeSpeed.value);
+            speedFan.value = value;
+
+        });
+        
 
         speedFan.addEventListener("input", function () {
             rangeSpeed.value = this.value;
-            hubConnection.invoke("ReciveData", rangeSpeed.value);
+            hubConnection.invoke("ReceiveData", rangeSpeed.value);
         });
         hubConnection.start();
 
