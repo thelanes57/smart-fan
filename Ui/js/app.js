@@ -33,8 +33,8 @@ const switchLang = document.getElementById("lang"),
 function animate(){
     if (rangeSpeed.value >= 1 && rangeSpeed.value < 30)
     {
-        animFansB.style.animationDuration = "5s";
-        animFansW.style.animationDuration = "5s";
+        animFanB.style.animationDuration = "5s";
+        animFanW.style.animationDuration = "5s";
     }
     else if (rangeSpeed.value >= 30 && rangeSpeed.value < 60 ){
         animFanB.style.animationDuration = "3s";
