@@ -198,6 +198,7 @@ b {
   width: 75%;
   height: 3vh;
   -webkit-appearance: none;
+  -moz-appearance: none;
   background: #e5e5e5;
   outline: none;
   border-radius: 20px;
@@ -205,6 +206,7 @@ b {
 }
 .range::-webkit-slider-thumb {
   -webkit-appearance: none;
+  -moz-appearance: none;
   width: 3vw;
   height: 25px;
   border-radius: 30%;

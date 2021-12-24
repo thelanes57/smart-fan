@@ -190,12 +190,14 @@ h1 {
   width: 75%;
   height: 3vh;
   -webkit-appearance: none;
+  -moz-appearance: none;
   background: #355c7d;
   outline: none;
   border-radius: 20px;
   overflow: hidden;
 }
 .range::-webkit-slider-thumb {
+  -moz-appearance: none;
   -webkit-appearance: none;
   width: 3vw;
   height: 25px;
