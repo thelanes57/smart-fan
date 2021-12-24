@@ -8,7 +8,9 @@ const switchLang = document.getElementById("lang"),
     barValueHg = document.getElementById("hg"),
     barValuePa = document.getElementById("pa"),
     hygr = document.getElementById("range_value1"),
-    animFans = document.getElementById("fan"),
+    animFanB = document.getElementById("fan"),
+    animFanW = document.getElementById("fanWhite"),
+
     languages = {
     "fan speed": {
         "ru" : "Скорость",
@@ -27,22 +29,28 @@ const switchLang = document.getElementById("lang"),
         "en": "Hygrometr"
     }
 };
+
 function animate(){
     if (rangeSpeed.value >= 1 && rangeSpeed.value < 30)
     {
-        animFans.style.animationDuration = "5s";
+        animFansB.style.animationDuration = "5s";
+        animFansW.style.animationDuration = "5s";
     }
     else if (rangeSpeed.value >= 30 && rangeSpeed.value < 60 ){
-        animFans.style.animationDuration = "3s";
+        animFanB.style.animationDuration = "3s";
+        animFanW.style.animationDuration = "3s";
     }
     else if (rangeSpeed.value >= 60 && rangeSpeed.value < 80){
-        animFans.style.animationDuration = "2s"
+        animFanB.style.animationDuration = "2s"
+        animFanW.style.animationDuration = "2s"
     }
     else if (rangeSpeed.value >= 80 && rangeSpeed.value < 100){
-        animFans.style.animationDuration = "1s"
+        animFanB.style.animationDuration = "1s"
+        animFanW.style.animationDuration = "1s"
     }
     else if (rangeSpeed.value == 0){
-        animFans.style.animationDuration = "0s"
+        animFanB.style.animationDuration = "0s"
+        animFanW.style.animationDuration = "0s"
     }
     
 }

@@ -179,9 +179,15 @@ b {
 .fan {
   text-align: center;
 }
-.fan img {
+.fan {
+  margin-top: 15%;
+}
+#fanWhite {
   max-width: 50%;
-  margin-top: 17%;
+  animation-name: rotation;
+  animation-duration: 0s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 .black {
   display: none;
@@ -408,6 +414,14 @@ b {
 }
 .diagram1 .text1 b {
   font-size: 3vw;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 @media (max-width: 1300px) {
   .header {
