@@ -174,12 +174,17 @@ h1 {
 .fan {
   margin-top: 15%;
 }
-.fan img {
+#fan {
   max-width: 50%;
+  animation-name: rotation;
+  animation-duration: 0s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 .white {
   display: none;
 }
+
 .range {
   margin-top: 10%;
   width: 75%;
@@ -402,6 +407,14 @@ h1 {
 }
 .diagram1 .text1 b {
   font-size: 3vw;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 @media (max-width: 1300px) {
   .header {
