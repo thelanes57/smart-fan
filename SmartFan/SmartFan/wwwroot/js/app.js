@@ -112,7 +112,7 @@ const hubConnection = new signalR.HubConnectionBuilder()
 
         speedFan.addEventListener("input", function () {
             rangeSpeed.value = this.value;
-            hubConnection.invoke("ReceiveData", rangeSpeed.value);
+            hubConnection.invoke("ReceiveData", { "dutyCycle": parseFloat(rangeSpeed.value) });
         });
         hubConnection.start();
 

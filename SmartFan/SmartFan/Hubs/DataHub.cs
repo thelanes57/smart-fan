@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
+using SmartFan.Data;
 using SmartFan.Device;
-using System;
 using System.Threading.Tasks;
 
 namespace SmartFan.Hubs
@@ -9,16 +8,14 @@ namespace SmartFan.Hubs
     public class DataHub : Hub<IDataHub>
     {
         DeviceManager deviceManager;
-        private readonly ILogger<DataHub> logger;
         public DataHub(DeviceManager devManager)
         {
-            this.logger = logger;
-            
+            this.deviceManager = devManager;
         }
 
-        public async Task ReceiveData(string message)
+        public async Task ReceiveData(ChangeParameter parameter)
         {
-            deviceManager.SetData(Convert.ToDouble(message));
+            deviceManager.SetData(parameter);
         }
 
         public override async Task OnConnectedAsync()
