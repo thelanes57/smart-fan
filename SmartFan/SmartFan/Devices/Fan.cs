@@ -8,14 +8,15 @@ namespace SmartFan.Devices
 {
     public class Fan : Device
     {
-        private ushort Freq = 2000;
+        public ServerOptions serverOptions { get;}
+        private ushort Freq = ServerOptions.Freq;
         private readonly GpioExpander Expander;
 
         public Fan(string id) : base(id)
         {
             Pi.Init<BootstrapWiringPi>();
             Expander = Pi.I2C.GetGpioExpander();
-            Expander.PwmFreq(Freq);
+            Expander.PwmFreq();
         }
 
         public override double Read()

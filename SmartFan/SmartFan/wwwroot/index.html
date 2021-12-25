@@ -4,32 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/day_mode.css" id="theme">
     <title>Климат контроль</title>
 </head>
 <body>
-    <header>
-        <div class="lang">
+    <div class="header">
+       <div class="lang">
+           <b>EN</b>
             <label class="switch">
                 <input type="checkbox" id = "lang">
                 <span class="slider"></span>
-            </label>      
+            </label>    
+            <b>RU</b>  
         </div>
         <div class="mode">
+            <img src="/img/Day.png" alt="" class="day">
             <label class="switch">
                 <input type="checkbox" id = "mode">
                 <span class="slider"></span>
-            </label>            
-        </div>
+            </label>
+            <img src="/img/Night.png" alt="" class="night">            
+        </div> 
+    </div>
+        
 
-    </header>
 
     <div class="content">
         <div class="fan_speed">
-            <h1>Fan speed</h1>
+            <h1 id= "lang_fan" >Fan speed</h1>
             <div class="fan_speed_content">
                 <div class="fan">
-                    <img src="/img/Vent.png" alt="Fan" class="vent">
+                   <img  class = "black" src="/img/Vent_Black.png" alt="Vent" id = "fan">
+                   <img  class = "white" src="/img/Vent_White.png" alt="Vent" id = "fanWhite">
+
                 </div>
                 <div class="range_content">
                     <input class = "range" type="range" id = "speedFan" min="0" max="100" step="1" value="0">
@@ -48,16 +55,19 @@
 
         </div>
         <div class="temperature">
-            <h1>Temperature</h1>
+            <h1 id= "lang_temp">Temperature</h1>
             <div class="temperature_content">
                 <div class="ce">
-                    <img src="/img/Temperature_C_Black.png" alt="temperature">
+                    <img class="black" src="/img/Temperature_C_Black.png" alt="temperature">
+                    <img  class = "white" src="/img/Temperature_C_White.png" alt="temperature">
+
                     <div class="text_te">
                         <b id = "temperature_ce">0</b>
                     </div>  
                 </div>
                 <div class="fe">
-                    <img src="/img/Temperatrure_F_Black.png" alt="temperature">
+                    <img class = "black" src="/img/Temperatrure_F_Black.png" alt="temperature">
+                    <img  class = "white" src="/img/Temperature_F_White.png" alt="temperature">
                     <div class="text_te">
                         <b id = "temperature_fe">0</b>
                     </div>
@@ -67,7 +77,7 @@
         </div>
         <div class="right_cont">
             <div class="bar">
-                <h1>Barometr</h1>
+                <h1 id= "lang_bar">Barometr</h1>
                 <div class="bar_content">
                     <div class="hg">
                         <b id = hg>0</b>
@@ -81,7 +91,7 @@
     
             </div>
             <div class="hygr">
-                <h1>Hygrometr</h1>
+                <h1 id= "lang_hygr">Hygrometr</h1>
                 <div class="hygr_content">
                    <div class="info_hygr">
                     <div class="diagram1 progress" data-percent="0">
