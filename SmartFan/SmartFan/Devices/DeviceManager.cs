@@ -10,7 +10,7 @@ namespace SmartFan.Device
 {
     public class DeviceManager
     {
-        public int currentSpeed = 10;
+        public int currentSpeed;
         private Term _term;
         private Barom _barom;
         private Gigrom _gigrom;

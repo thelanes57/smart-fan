@@ -10,16 +10,14 @@ namespace SmartFan.Hubs
     {
         DeviceManager deviceManager;
         private readonly ILogger<DataHub> logger;
-        public DataHub(DeviceManager devManager, ILogger<DataHub> logger)
+        public DataHub(DeviceManager devManager)
         {
-            deviceManager = devManager;
             this.logger = logger;
             
         }
 
         public async Task ReceiveData(string message)
         {
-            logger.LogInformation($"DutyCycle {message}");
             deviceManager.SetData(Convert.ToDouble(message));
         }
 
