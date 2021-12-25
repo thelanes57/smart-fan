@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using SmartFan.Data;
 using TroykaCap.Expander;
 using TroykaCap.Expander.Extensions;
@@ -8,15 +9,15 @@ namespace SmartFan.Devices
 {
     public class Fan : Device
     {
-        public ServerOptions serverOptions { get;}
-        private ushort Freq = ServerOptions.Freq;
         private readonly GpioExpander Expander;
-
-        public Fan(string id) : base(id)
+        private IOptions<ServerOptions> _options;
+        public Fan(string id, IOptions<ServerOptions> options) : base(id)
         {
+            _options = options;
             Pi.Init<BootstrapWiringPi>();
             Expander = Pi.I2C.GetGpioExpander();
-            Expander.PwmFreq();
+            Expander.PwmFreq(_options.Value.Freq);
+            
         }
 
         public override double Read()
@@ -26,7 +27,7 @@ namespace SmartFan.Devices
 
         public override void Write(ChangeParameter parameter)
         {
-            Expander.AnalogWriteDouble(GpioExpanderPin.Pin0, parameter.DutyCycle);
+           Expander.AnalogWriteDouble(_options.Value.PinPinNumber, parameter.DutyCycle);
         }
     }
 }

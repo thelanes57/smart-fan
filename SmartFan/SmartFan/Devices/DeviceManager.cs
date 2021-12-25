@@ -1,62 +1,61 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Options;
 using SmartFan.Data;
 using SmartFan.Devices;
 using SmartFan.Hubs;
 using System;
-using System.Timers;
+using System.Threading;
+using System.Threading.Tasks;
+using TroykaCap.Expander;
 
 namespace SmartFan.Device
 {
     public class DeviceManager
     {
         public int currentSpeed;
-        private static Term _term;
-        private static Barom _barom;
-        private static Gigrom _gigrom;
-        private static Fan _fan;
+        private Term _term;
+        private Barom _barom;
+        private Gigrom _gigrom;
+        private Fan _fan;
 
-        private static IHubContext<DataHub, IDataHub> _hub;
+        private readonly IHubContext<DataHub, IDataHub> _hub;
 
-        private static Timer aTimer;
-
-        public DeviceManager(IHubContext<DataHub, IDataHub> hub)
+        public DeviceManager(IHubContext<DataHub, IDataHub> hub, IOptions<ServerOptions> options)
         {
-
             _hub = hub;
             _term = new Term("Some name term");
             _barom = new Barom("Some name Barom");
             _gigrom = new Gigrom("Some name Gigrom");
-            _fan = new Fan("Some name fan");
-            SetTimer();
+            _fan = new Fan("Some name fan",options);
+            Thread thread = new Thread(GetData);
+            thread.Start();
         }
 
-        private static void SetTimer()
+        public async void GetData()
         {
-            aTimer = new Timer(5000);
-            aTimer.Elapsed += GetData;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-        }
 
-        private static async void GetData(Object source, ElapsedEventArgs e)
-        {
-            var valeTem = _term.Read();
-            var valeBar = _barom.Read();
-            var data = new ParameterValues()
+            while (true)
             {
-                TarmValueC = valeTem,
-                TarmValueF = 9 / 5 * valeTem + 32,
-                BarValueMGH = (int)valeBar,
-                BarValuePascal = (int)valeBar * 101325 / 760,
-                GigValue = (int)_gigrom.Read()
-            };
-            await _hub.Clients.All.Receiver(data);
+                var valeTem = _term.Read();
+                var valeBar = _barom.Read();
+                var data = new ParameterValues()
+                {
+                    TarmValueC = valeTem,
+                    TarmValueF = 9/5 * valeTem + 32,
+                    BarValueMGH = (int)valeBar,
+                    BarValuePascal = (int)valeBar * 101325/760,
+                    GigValue = (int) _gigrom.Read()
+                };
+                await _hub.Clients.All.Receiver(data);
+                await Task.Delay(5000);
+            }
         }
 
-        public void SetData(ChangeParameter parameter)
+
+        public void SetData(double dutyCycle)
         {
-            currentSpeed = Convert.ToInt32(parameter.DutyCycle);
-            _fan.Write(new ChangeParameter() { DutyCycle = parameter.DutyCycle / 100 });
+            currentSpeed = Convert.ToInt32(dutyCycle);
+            _fan.Write(new ChangeParameter() { DutyCycle = dutyCycle / 100 });
         }
     }
 }
