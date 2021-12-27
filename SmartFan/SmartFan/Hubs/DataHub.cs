@@ -13,14 +13,14 @@ namespace SmartFan.Hubs
             this.deviceManager = devManager;
         }
 
-        public async Task ReceiveData(ChangeParameter parameter)
+        public async Task ReceiveDataFromClient(ChangeParameter parameter)
         {
             deviceManager.SetData(parameter);
         }
 
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.StartSpeed(deviceManager.СurrentSpeed);
+            await Clients.All.StartSpeed(deviceManager.ChangeParameter);
             await base.OnConnectedAsync();
         }
     }

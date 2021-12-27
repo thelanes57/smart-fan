@@ -95,7 +95,7 @@ const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/fan")
             .build();
 
-        hubConnection.on("Receiver", function (myObj){
+        hubConnection.on("ReceiverDataFromServer", function (myObj){
             temperCe.innerHTML = myObj.tarmValueC.toFixed(2);
             temperFe.innerHTML = myObj.tarmValueF.toFixed(2);
             barValueHg.innerHTML = myObj.barValueMGH;
@@ -103,7 +103,8 @@ const hubConnection = new signalR.HubConnectionBuilder()
             hygr.innerHTML = myObj.gigValue;
         });
 
-        hubConnection.on("StartSpeed", function (value) {
+        hubConnection.on("StartSpeed", function (myObj) {
+            let value = myObj.currentSpeed;
             rangeSpeed.value = value;
             rangeSpeed.innerHTML = rangeSpeed.value;
             data.setAttribute('data-percent', rangeSpeed.value);
@@ -112,7 +113,7 @@ const hubConnection = new signalR.HubConnectionBuilder()
 
         speedFan.addEventListener("input", function () {
             rangeSpeed.value = this.value;
-            hubConnection.invoke("ReceiveData", { "dutyCycle": parseFloat(rangeSpeed.value) });
+            hubConnection.invoke("ReceiveDataFromClient", { "currentSpeed": parseInt(rangeSpeed.value, 10) });
         });
         hubConnection.start();
 

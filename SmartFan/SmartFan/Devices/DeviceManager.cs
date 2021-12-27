@@ -4,14 +4,13 @@ using SmartFan.Data;
 using SmartFan.Devices;
 using SmartFan.Hubs;
 using System;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace SmartFan.Device
 {
     public class DeviceManager
     {
-        public int СurrentSpeed;
+        public ChangeParameter ChangeParameter;
         private static Term _term;
         private static Barom _barom;
         private static Gigrom _gigrom;
@@ -28,14 +27,9 @@ namespace SmartFan.Device
             _barom = new Barom("Some name Barom");
             _gigrom = new Gigrom("Some name Gigrom");
             //_fan = new Fan("Some name fan", options);
-            SetTimer(options.CurrentValue.TimeSendigData);
-        }
 
-        private static void SetTimer(TimeSpan second)
-        {
-            aTimer = new Timer(second.TotalMilliseconds);
+            aTimer = new Timer(new TimeSpan(0, 0, options.CurrentValue.TimeSendigData).TotalMilliseconds);
             aTimer.Elapsed += GetData;
-            aTimer.AutoReset = true;
             aTimer.Enabled = true;
         }
 
@@ -51,14 +45,14 @@ namespace SmartFan.Device
                 BarValuePascal = (int)valeBar * 101325 / 760,
                 GigValue = (int)_gigrom.Read()
             };
-            await _hub.Clients.All.Receiver(data);
+            await _hub.Clients.All.ReceiverDataFromServer(data);
         }
-
 
         public void SetData(ChangeParameter parameter)
         {
-            СurrentSpeed = Convert.ToInt32(parameter.DutyCycle);
-            //_fan.Write(new ChangeParameter() { DutyCycle = parameter.DutyCycle / 100 });
+            ChangeParameter = parameter;
+            parameter.DutyCycle = parameter.CurrentSpeed / 100.0;
+            //_fan.Write(parameter);
         }
     }
 }
