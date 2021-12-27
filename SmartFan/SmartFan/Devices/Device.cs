@@ -4,11 +4,11 @@ namespace SmartFan.Devices
 {
     public abstract class Device
     {
-        public string id { get;private set; }
+        public string Id { get; }
 
         public Device(string id)
         {
-            this.id = id;
+            Id = id;
         }
 
         public abstract double Read();

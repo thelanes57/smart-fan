@@ -17,6 +17,7 @@ namespace SmartFan.Devices
 
         public override void Write(ChangeParameter parameter)
         {
+            throw new NotSupportedException();
         }
     }
 }

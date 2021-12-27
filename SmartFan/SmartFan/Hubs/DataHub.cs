@@ -20,7 +20,7 @@ namespace SmartFan.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.StartSpeed(deviceManager.currentSpeed);
+            await Clients.All.StartSpeed(deviceManager.СurrentSpeed);
             await base.OnConnectedAsync();
         }
     }
