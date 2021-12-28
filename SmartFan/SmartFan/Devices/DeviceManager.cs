@@ -4,22 +4,21 @@ using SmartFan.Data;
 using SmartFan.Devices;
 using SmartFan.Hubs;
 using System;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace SmartFan.Device
 {
-    public class DeviceManager
+    public sealed class DeviceManager : IDisposable
     {
-        public int СurrentSpeed;
-        private static Term _term;
-        private static Barom _barom;
-        private static Gigrom _gigrom;
-        private static Fan _fan;
+        public ChangeParameter ChangeParameter { get; private set; }
+        private readonly Term _term;
+        private readonly Barom _barom;
+        private readonly Gigrom _gigrom;
+        private readonly Fan _fan;
+        private bool disposed = false;
+        private readonly IHubContext<DataHub, IDataHub> _hub;
 
-        private static IHubContext<DataHub, IDataHub> _hub;
-
-        private static Timer aTimer;
+        private readonly Timer aTimer;
 
         public DeviceManager(IHubContext<DataHub, IDataHub> hub, IOptionsMonitor<ServerOptions> options)
         {
@@ -27,19 +26,14 @@ namespace SmartFan.Device
             _term = new Term("Some name term");
             _barom = new Barom("Some name Barom");
             _gigrom = new Gigrom("Some name Gigrom");
-            //_fan = new Fan("Some name fan", options);
-            SetTimer(options.CurrentValue.TimeSendigData);
-        }
+            _fan = new Fan("Some name fan", options);
 
-        private static void SetTimer(TimeSpan second)
-        {
-            aTimer = new Timer(second.TotalMilliseconds);
+            aTimer = new Timer(new TimeSpan(0, 0, options.CurrentValue.TimeSendigData).TotalMilliseconds);
             aTimer.Elapsed += GetData;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            aTimer.Start();
         }
 
-        private static async void GetData(Object source, ElapsedEventArgs e)
+        private async void GetData(object source, ElapsedEventArgs args)
         {
             var valeTem = _term.Read();
             var valeBar = _barom.Read();
@@ -51,14 +45,42 @@ namespace SmartFan.Device
                 BarValuePascal = (int)valeBar * 101325 / 760,
                 GigValue = (int)_gigrom.Read()
             };
-            await _hub.Clients.All.Receiver(data);
+            await _hub.Clients.All.ReceiverDataFromServer(data);
         }
-
 
         public void SetData(ChangeParameter parameter)
         {
-            СurrentSpeed = Convert.ToInt32(parameter.DutyCycle);
-            //_fan.Write(new ChangeParameter() { DutyCycle = parameter.DutyCycle / 100 });
+            ChangeParameter = parameter;
+            parameter.DutyCycle = parameter.CurrentSpeed / 100.0;
+            _fan.Write(parameter);
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                aTimer.Dispose();
+            }
+
+            aTimer.Elapsed -= GetData;
+
+            _fan!.Write(0.0);
+
+            disposed = true;
+        }
+
+        ~DeviceManager()
+        {
+            Dispose(disposing: false);
         }
     }
 }

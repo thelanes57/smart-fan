@@ -1,13 +1,23 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace SmartFan
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+
+                return 0;
+            }
+            catch (Exception error)
+            {
+                return error.HResult;
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
