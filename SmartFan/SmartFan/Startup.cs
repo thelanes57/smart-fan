@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +25,7 @@ namespace SmartFan
             services.Configure<ServerOptions>(Configuration.GetSection(nameof(ServerOptions)));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsSnapshot<ServerOptions> options)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptionsMonitor<ServerOptions> options)
         {
 
             if (env.IsDevelopment())
@@ -41,7 +40,7 @@ namespace SmartFan
             app.UseEndpoints(endpoints =>
             {
 
-                endpoints.MapFallbackToFile(options.Value.FileName);
+                endpoints.MapFallbackToFile(options.CurrentValue.FileName);
                 endpoints.MapHub<DataHub>("/fan");
             });
         }

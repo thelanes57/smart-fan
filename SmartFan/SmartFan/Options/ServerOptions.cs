@@ -1,5 +1,4 @@
-﻿
-using TroykaCap.Expander;
+﻿using TroykaCap.Expander;
 
 namespace SmartFan
 {
@@ -8,5 +7,6 @@ namespace SmartFan
         public GpioExpanderPin PinPinNumber { get; set; }
         public int Freq { get; set; }
         public string FileName { get; set; }
+        public int TimeSendigData { get; set; }
     }
 }
