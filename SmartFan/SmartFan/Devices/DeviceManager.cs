@@ -8,17 +8,17 @@ using System.Timers;
 
 namespace SmartFan.Device
 {
-    public class DeviceManager
+    public sealed class DeviceManager : IDisposable
     {
-        public ChangeParameter ChangeParameter;
-        private static Term _term;
-        private static Barom _barom;
-        private static Gigrom _gigrom;
-        private static Fan _fan;
+        public ChangeParameter ChangeParameter { get; private set; }
+        private readonly Term _term;
+        private readonly Barom _barom;
+        private readonly Gigrom _gigrom;
+        private readonly Fan _fan;
+        private bool disposed = false;
+        private readonly IHubContext<DataHub, IDataHub> _hub;
 
-        private static IHubContext<DataHub, IDataHub> _hub;
-
-        private static Timer aTimer;
+        private readonly Timer aTimer;
 
         public DeviceManager(IHubContext<DataHub, IDataHub> hub, IOptionsMonitor<ServerOptions> options)
         {
@@ -30,10 +30,10 @@ namespace SmartFan.Device
 
             aTimer = new Timer(new TimeSpan(0, 0, options.CurrentValue.TimeSendigData).TotalMilliseconds);
             aTimer.Elapsed += GetData;
-            aTimer.Enabled = true;
+            aTimer.Start();
         }
 
-        private static async void GetData(Object source, ElapsedEventArgs e)
+        private async void GetData(object source, ElapsedEventArgs args)
         {
             var valeTem = _term.Read();
             var valeBar = _barom.Read();
@@ -53,6 +53,32 @@ namespace SmartFan.Device
             ChangeParameter = parameter;
             parameter.DutyCycle = parameter.CurrentSpeed / 100.0;
             //_fan.Write(parameter);
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                aTimer.Dispose();
+            }
+
+            aTimer.Elapsed -= GetData;
+
+            disposed = true;
+        }
+
+        ~DeviceManager()
+        {
+            Dispose(disposing: false);
         }
     }
 }

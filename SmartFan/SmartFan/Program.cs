@@ -6,14 +6,17 @@ namespace SmartFan
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             try
             {
                 CreateHostBuilder(args).Build().Run();
+
+                return 0;
             }
-            catch (Exception e)
+            catch (Exception error)
             {
+                return error.HResult;
             }
         }
 
