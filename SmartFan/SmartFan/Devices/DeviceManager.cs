@@ -26,7 +26,7 @@ namespace SmartFan.Device
             _term = new Term("Some name term");
             _barom = new Barom("Some name Barom");
             _gigrom = new Gigrom("Some name Gigrom");
-            //_fan = new Fan("Some name fan", options);
+            _fan = new Fan("Some name fan", options);
 
             aTimer = new Timer(new TimeSpan(0, 0, options.CurrentValue.TimeSendigData).TotalMilliseconds);
             aTimer.Elapsed += GetData;
@@ -52,7 +52,7 @@ namespace SmartFan.Device
         {
             ChangeParameter = parameter;
             parameter.DutyCycle = parameter.CurrentSpeed / 100.0;
-            //_fan.Write(parameter);
+            _fan.Write(parameter);
         }
 
         public void Dispose()
@@ -72,6 +72,8 @@ namespace SmartFan.Device
             }
 
             aTimer.Elapsed -= GetData;
+
+            _fan!.Write(0.0);
 
             disposed = true;
         }
