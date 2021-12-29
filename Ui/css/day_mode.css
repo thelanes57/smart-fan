@@ -172,7 +172,7 @@ h1 {
   text-align: center;
 }
 .fan {
-  margin-top: 15%;
+  margin-top: 8vh;
 }
 #fan {
   max-width: 50%;
@@ -197,8 +197,8 @@ h1 {
   overflow: hidden;
 }
 .range::-webkit-slider-thumb {
-  -moz-appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
   width: 3vw;
   height: 25px;
   border-radius: 30%;
@@ -206,25 +206,26 @@ h1 {
   cursor: pointer;
   box-shadow: -407px 0 0 400px #6c5b7b;
 }
+
 .diagram {
   margin: 10% auto;
   width: 25vh;
   height: 25vh;
   border-radius: 50%;
-  background: #990;
+  background: #6c5b7b;
   position: relative;
   overflow: hidden;
 }
 .diagram::before {
   content: "";
-  display: flex;
+  display: block;
   position: absolute;
   top: 20px;
   left: 20px;
   right: 20px;
   bottom: 20px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: white;
   z-index: 3;
   opacity: 1;
 }
@@ -263,7 +264,7 @@ h1 {
   background: #355c7d;
 }
 .diagram.over_50 .left::before {
-  background: #990;
+  background: #6c5b7b;
 }
 .diagram .right::before {
   background: #355c7d;
@@ -338,7 +339,7 @@ h1 {
   width: 25vh;
   height: 25vh;
   border-radius: 50%;
-  background: #990;
+  background: #355c7d;
   position: relative;
   overflow: hidden;
 }
@@ -351,7 +352,7 @@ h1 {
   right: 20px;
   bottom: 20px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: white;
   z-index: 3;
   opacity: 1;
 }
@@ -390,7 +391,7 @@ h1 {
   background: #6c5b7b;
 }
 .diagram1.over_50 .left1::before {
-  background: #990;
+  background: #355c7d;
 }
 .diagram1 .right1::before {
   background: #6c5b7b;
@@ -420,10 +421,25 @@ h1 {
 }
 @media (max-width: 1300px) {
   .header {
-    max-height: 8vh;
-    display: flex;
     margin-left: 60%;
     margin-right: -5%;
-    justify-content: space-between;
+  }
+}
+@media (max-width: 1200px) and (max-height: 1400px) {
+  .diagram1 {
+    margin: 30% auto;
+    width: 18vh;
+    height: 18vh;
+  }
+  .diagram {
+    margin: 5vh auto;
+    width: 18vh;
+    height: 18vh;
+  }
+}
+@media (max-width: 650px) {
+  .header {
+    margin-left: 50%;
+    margin-right: -10%;
   }
 }

@@ -3,6 +3,7 @@ const switchLang = document.getElementById("lang"),
     speedFan = document.getElementById("speedFan"),
     rangeSpeed = document.getElementById("range_value"),
     data = document.querySelector(".diagram.progress"),
+    dataHygr = document.querySelector(".diagram1.progress"),
     temperCe = document.getElementById("temperature_ce"),
     temperFe = document.getElementById("temperature_fe"),
     barValueHg = document.getElementById("hg"),
@@ -10,7 +11,6 @@ const switchLang = document.getElementById("lang"),
     hygr = document.getElementById("range_value1"),
     animFanB = document.getElementById("fan"),
     animFanW = document.getElementById("fanWhite"),
-
     languages = {
     "fan speed": {
         "ru" : "Скорость",
@@ -30,15 +30,15 @@ const switchLang = document.getElementById("lang"),
     }
 };
 
-function animate(){
+function animateFans(){
     if (rangeSpeed.value >= 1 && rangeSpeed.value < 30)
     {
-        animFanB.style.animationDuration = "5s";
-        animFanW.style.animationDuration = "5s";
+        animFanB.style.animationDuration = "5s"
+        animFanW.style.animationDuration = "5s"
     }
     else if (rangeSpeed.value >= 30 && rangeSpeed.value < 60 ){
-        animFanB.style.animationDuration = "3s";
-        animFanW.style.animationDuration = "3s";
+        animFanB.style.animationDuration = "3s"
+        animFanW.style.animationDuration = "3s"
     }
     else if (rangeSpeed.value >= 60 && rangeSpeed.value < 80){
         animFanB.style.animationDuration = "2s"
@@ -87,23 +87,54 @@ speedFan.addEventListener("input", function() {
     rangeSpeed.value = this.value;
     rangeSpeed.innerHTML = rangeSpeed.value;
     data.setAttribute('data-percent', rangeSpeed.value)
-    animate()
+    animateFans();
+    progressViewSpeed();
   });
+
+  function progressViewSpeed(){
+    let diagramBox = document.querySelectorAll('.diagram.progress');
+    diagramBox.forEach((box) => {
+        let deg = (360 * box.dataset.percent / 100) + 180;
+        if(box.dataset.percent >= 50){
+            box.classList.add('over_50');
+        }else{
+            box.classList.remove('over_50');
+        }
+        box.querySelector('.piece.right').style.transform = 'rotate('+deg+'deg)';
+    });
+}
+function progressViewHygr(){
+    let diagramBox1 = document.querySelectorAll('.diagram1.progress');
+    diagramBox1.forEach((box) => {
+        let deg = (360 * box.dataset.percent / 100) + 180;
+        if(box.dataset.percent >= 50){
+            box.classList.add('over_50');
+        }else{
+            box.classList.remove('over_50');
+        }
+        box.querySelector('.piece.right1').style.transform = 'rotate('+deg+'deg)';
+    });
+}
 
 
 const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/fan")
             .build();
 
-        hubConnection.on("Receiver", function (myObj){
-            temperCe.innerHTML = myObj.tarmValueC.ToFixed(1);
-            temperFe.innerHTML = myObj.tarmValueF.ToFixed(1);
+        hubConnection.on("ReceiverDataFromServer", function (myObj){
+            temperCe.innerHTML = myObj.tarmValueC.toFixed(2);
+            temperFe.innerHTML = myObj.tarmValueF.toFixed(2);
             barValueHg.innerHTML = myObj.barValueMGH;
             barValuePa.innerHTML = myObj.barValuePascal;
-            hygr.innerHTML = myObj.gigValue;
+            hygr.value = myObj.gigValue;
+            hygr.innerHTML = hygr.value;
+            dataHygr.setAttribute('data-percent', hygr.value);
+            progressViewHygr();
+            
         });
 
-        hubConnection.on("StartSpeed", function (value) {
+        hubConnection.on("StartSpeed", function (myObj) {
+            let value = myObj.currentSpeed;
             rangeSpeed.value = value;
             rangeSpeed.innerHTML = rangeSpeed.value;
             data.setAttribute('data-percent', rangeSpeed.value);
@@ -112,9 +143,10 @@ const hubConnection = new signalR.HubConnectionBuilder()
 
         speedFan.addEventListener("input", function () {
             rangeSpeed.value = this.value;
-            hubConnection.invoke("ReceiveData", rangeSpeed.value);
-        });
-        hubConnection.start();
+            hubConnection.invoke("ReceiveDataFromClient", { "currentSpeed": parseInt(rangeSpeed.value, 10) });
+});
+
+
 
 
 
