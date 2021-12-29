@@ -80,14 +80,24 @@ div {
 .header {
   max-height: 8vh;
   display: flex;
-  margin-left: 68%;
-  margin-right: 2%;
+  margin-left: 60%;
+  margin-right: -3%;
   justify-content: space-between;
 }
 .header b {
   font-size: 1.3vw;
   font-weight: 500;
   color: #f5f5f5;
+}
+.turn_off {
+  display: inline-block;
+  margin-top: 5%;
+  margin-left: -6%;
+}
+.off {
+  max-width: 40%;
+  height: 95%;
+  cursor: pointer;
 }
 .lang,
 .mode {
@@ -180,7 +190,7 @@ b {
   text-align: center;
 }
 .fan {
-  margin-top: 15%;
+  margin-top: 8vh;
 }
 #fanWhite {
   max-width: 50%;
@@ -443,9 +453,14 @@ b {
     height: 18vh;
   }
 }
-@media (max-width: 650px) {
+@media (max-width: 900px) {
   .header {
     margin-left: 50%;
-    margin-right: -10%;
+    margin-right: -1%;
+  }
+}
+@media (max-width: 760px) {
+  .header {
+    margin-left: 30%;
   }
 }

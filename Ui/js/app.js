@@ -11,6 +11,7 @@ const switchLang = document.getElementById("lang"),
     hygr = document.getElementById("range_value1"),
     animFanB = document.getElementById("fan"),
     animFanW = document.getElementById("fanWhite"),
+    turnOff = document.getElementById("turnOff"),
     languages = {
     "fan speed": {
         "ru" : "Скорость",
@@ -141,11 +142,24 @@ const hubConnection = new signalR.HubConnectionBuilder()
             speedFan.value = value;
         });
 
+        hubConnection.on("Shutdown", function (result) {
+                if (result) {
+                    alert("Пожалуйста, закройте вкладку.");
+                }
+                else {
+                    alert("Не удалось выключить устройство.");
+                }
+        });
+
+        turnOff.addEventListener ("click", function(){
+            hubConnection.invoke("Shutdown");
+        })
+
         speedFan.addEventListener("input", function () {
             rangeSpeed.value = this.value;
             hubConnection.invoke("ReceiveDataFromClient", { "currentSpeed": parseInt(rangeSpeed.value, 10) });
 });
-
+hubConnection.start();
 
 
 
