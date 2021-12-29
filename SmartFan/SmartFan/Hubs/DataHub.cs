@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using SmartFan.Data;
 using SmartFan.Device;
 using System.Threading.Tasks;
+using Swan;
 using Unosquare.RaspberryIO;
 
 namespace SmartFan.Hubs
@@ -21,18 +22,22 @@ namespace SmartFan.Hubs
             deviceManager.SetData(parameter);
         }
 
-        public async Task<bool> Shotdown()
+        public async Task Shutdown()
         {
+            bool result;
+            
             try
             {
-                await Pi.ShutdownAsync();
+                await ProcessRunner.GetProcessResultAsync("/sbin/shutdown", "+1");
 
-                return true;
+                result = true;
             }
             catch (Exception)
             {
-                return false;
+                result = false;
             }
+            
+            await Clients.All.Shutdown(result);
         }
         
         public override async Task OnConnectedAsync()
