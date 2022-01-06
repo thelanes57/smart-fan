@@ -7,5 +7,6 @@ namespace SmartFan.Hubs
     {
         Task ReceiverDataFromServer(ParameterValues message);
         Task StartSpeed(ChangeParameter currentSpeed);
+        Task Shutdown(bool result);
     }
 }
