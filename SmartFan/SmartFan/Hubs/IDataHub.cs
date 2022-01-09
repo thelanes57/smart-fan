@@ -5,8 +5,8 @@ namespace SmartFan.Hubs
 {
     public interface IDataHub
     {
-        Task ReceiverDataFromServer(ParameterValues message);
-        Task StartSpeed(ChangeParameter currentSpeed);
+        Task ReceiverDataFromServer(ParameterValues data);
+        Task StartSpeed(ChangeParameter speed);
         Task Shutdown(bool result);
     }
 }

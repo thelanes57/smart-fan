@@ -11,48 +11,46 @@ namespace SmartFan.Device
     public sealed class DeviceManager : IDisposable
     {
         public ChangeParameter ChangeParameter { get; private set; }
-        private readonly Term _term;
-        private readonly Barom _barom;
-        private readonly Gigrom _gigrom;
-        private readonly Fan _fan;
+        private readonly Termometеr term;
+        private readonly Barometеr bar;
+        private readonly Hygrometer hygr;
+        private readonly Fan fan;
         private bool disposed = false;
         private readonly IHubContext<DataHub, IDataHub> _hub;
-
-        private readonly Timer aTimer;
+        private readonly Timer timer;
 
         public DeviceManager(IHubContext<DataHub, IDataHub> hub, IOptionsMonitor<ServerOptions> options)
         {
             _hub = hub;
-            _term = new Term("Some name term");
-            _barom = new Barom("Some name Barom");
-            _gigrom = new Gigrom("Some name Gigrom");
-            _fan = new Fan("Some name fan", options);
-
-            aTimer = new Timer(new TimeSpan(0, 0, options.CurrentValue.TimeSendigData).TotalMilliseconds);
-            aTimer.Elapsed += GetData;
-            aTimer.Start();
+            term = new Termometеr("Some name termometer");
+            bar = new Barometеr("Some name barometer");
+            hygr = new Hygrometer("Some name hygrometer");
+            fan = new Fan("Some name fan", options);
+            timer = new Timer(new TimeSpan(0, 0, options.CurrentValue.TimeSendingData).TotalMilliseconds);
+            timer.Elapsed += GetData;
+            timer.Start();
         }
 
         private async void GetData(object source, ElapsedEventArgs args)
         {
-            var valeTem = _term.Read();
-            var valeBar = _barom.Read();
-            var data = new ParameterValues()
+            var termValue = term.Read();
+            var barValue = bar.Read();
+            var value = new ParameterValues()
             {
-                TarmValueC = valeTem,
-                TarmValueF = 9 / 5 * valeTem + 32,
-                BarValueMGH = (int)valeBar,
-                BarValuePascal = (int)valeBar * 101325 / 760,
-                GigValue = (int)_gigrom.Read()
+                TermValueC = termValue,
+                TermValueF = 9 / 5 * termValue + 32,
+                BarValueMGH = (int)barValue,
+                BarValuePascal = (int)barValue * 101325 / 760,
+                HygrValue = (int)hygr.Read()
             };
-            await _hub.Clients.All.ReceiverDataFromServer(data);
+            await _hub.Clients.All.ReceiverDataFromServer(value);
         }
 
         public void SetData(ChangeParameter parameter)
         {
             ChangeParameter = parameter;
-            parameter.DutyCycle = parameter.CurrentSpeed / 100.0;
-            _fan.Write(parameter);
+            parameter.DutyCycle = parameter.Speed / 100.0;
+            fan.Write(parameter);
         }
 
         public void Dispose()
@@ -65,16 +63,12 @@ namespace SmartFan.Device
         {
             if (disposed)
                 return;
-
             if (disposing)
             {
-                aTimer.Dispose();
+                timer.Dispose();
             }
-
-            aTimer.Elapsed -= GetData;
-
-            _fan!.Write(0.0);
-
+            timer.Elapsed -= GetData;
+            fan!.Write(0.0);
             disposed = true;
         }
 

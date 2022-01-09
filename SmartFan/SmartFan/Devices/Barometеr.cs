@@ -3,16 +3,17 @@ using System;
 
 namespace SmartFan.Devices
 {
-    public class Gigrom : Device
+    public class Barometеr : Device
     {
         private readonly Random random = new Random();
-        public Gigrom(string id) : base(id)
+        
+        public Barometеr(string id) : base(id)
         {
         }
 
         public override double Read()
         {
-            return random.Next(0, 101) + random.NextDouble();
+            return random.Next(700, 801) + random.NextDouble(); //мм рт. ст.
         }
 
         public override void Write(ChangeParameter parameter)

@@ -12,31 +12,28 @@ namespace SmartFan.Hubs
     {
         DeviceManager deviceManager;
 
-        public DataHub(DeviceManager devManager)
+        public DataHub(DeviceManager _deviceManager)
         {
-            this.deviceManager = devManager;
+            this.deviceManager = _deviceManager;
         }
 
-        public async Task ReceiveDataFromClient(ChangeParameter parameter)
+        public async Task ReceiveDataFromClient(ChangeParameter data)
         {
-            deviceManager.SetData(parameter);
+            deviceManager.SetData(data);
         }
 
         public async Task Shutdown()
         {
-            bool result;
-            
+            bool result;            
             try
             {
                 await ProcessRunner.GetProcessResultAsync("/sbin/shutdown", "+1");
-
                 result = true;
             }
             catch (Exception)
             {
                 result = false;
-            }
-            
+            }            
             await Clients.All.Shutdown(result);
         }
         

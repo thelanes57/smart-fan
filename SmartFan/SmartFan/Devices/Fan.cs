@@ -12,13 +12,13 @@ namespace SmartFan.Devices
     {
         private readonly GpioExpander Expander;
         private IOptionsMonitor<ServerOptions> _options;
+
         public Fan(string id, IOptionsMonitor<ServerOptions> options) : base(id)
         {
             _options = options;
             Pi.Init<BootstrapWiringPi>();
             Expander = Pi.I2C.GetGpioExpander();
-            Expander.PwmFreq(_options.CurrentValue.Freq);
-            
+            Expander.PwmFreq(_options.CurrentValue.Freq);            
         }
 
         public override double Read()
@@ -28,7 +28,7 @@ namespace SmartFan.Devices
 
         public override void Write(ChangeParameter parameter)
         {
-           Expander.AnalogWriteDouble(_options.CurrentValue.PinPinNumber, parameter.DutyCycle);
+           Expander.AnalogWriteDouble(_options.CurrentValue.PinNumber, parameter.DutyCycle);
         }
     }
 }
